@@ -1,3 +1,3 @@
-package com.wencong.mvpcode
+package com.wencong.mvpcode.adapter
 
 data class ListData(var title: String, var content: String)

@@ -1,19 +1,19 @@
 package com.wencong.mvpcode
 
 import androidx.lifecycle.ViewModel
+import com.wencong.mvpcode.adapter.ListData
 import com.wencong.mvpcode.util.RequestData
 
 class MainListViewModel : ViewModel() {
 
     private val dataRequest: RequestData = RequestData()
 
-    var items: List<ListData>
+    var items: ArrayList<ListData> = ArrayList()
 
-    init {
-        items = emptyList()
-    }
-
-    fun loadData() {
-        items = dataRequest.loadMainData()
+    fun loadData(isLoadMore:Boolean = false) {
+        if (!isLoadMore){
+            items.clear()
+        }
+        items.addAll(dataRequest.loadMainData(items.size))
     }
 }
