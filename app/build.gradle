@@ -2,22 +2,22 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-kapt'
-    id 'com.facebook.testing.screenshot'
     id 'androidx.navigation.safeargs.kotlin'
+    id 'shot'
 }
 
 android {
-    compileSdkVersion 30
-    buildToolsVersion "30.0.3"
+    compileSdkVersion 29
+    buildToolsVersion "29.0.3"
 
     defaultConfig {
-        applicationId "com.wencong.mvpcodetest"
+        applicationId "com.wencong.mvpcode"
         minSdkVersion 16
-        targetSdkVersion 30
+        //noinspection OldTargetApi
+        targetSdkVersion 29
         versionCode 1
         versionName "1.0"
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         testInstrumentationRunner "com.wencong.mvpcode.AndroidTestRunner"
     }
 
@@ -79,11 +79,8 @@ dependencies {
     androidTestImplementation "androidx.test.espresso:espresso-idling-resource:$espresso_version"
     // Navigation test
     androidTestImplementation "androidx.navigation:navigation-testing:$navgation_version"
+}
 
-    //Facebook snap shot test
-    implementation "com.facebook.testing.screenshot:layout-hierarchy-common:$fb_snap_version"
-    implementation "com.facebook.testing.screenshot:layout-hierarchy-litho:$fb_snap_version"
-    implementation "com.facebook.litho:litho-core:$litho_version"
-    implementation "com.facebook.litho:litho-widget:$litho_version"
-
+shot {
+    appId = 'com.wencong.mvpcode'
 }
