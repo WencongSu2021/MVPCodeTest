@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">MVPCodeTest</string>
+    <string name="back_icon_description">back icon</string>
 </resources>
