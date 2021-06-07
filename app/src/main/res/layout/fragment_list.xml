@@ -3,8 +3,8 @@
 
     <data>
         <variable
-            name="model"
-            type="com.wencong.mvpcode.MainListViewModel" />
+            name="data"
+            type="com.wencong.mvpcode.view.list.ResultData" />
     </data>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -16,6 +16,6 @@
             android:id="@+id/rvMainList"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            adapterItems="@{model.items}" />
+            adapterItems="@{data.data}" />
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </layout>

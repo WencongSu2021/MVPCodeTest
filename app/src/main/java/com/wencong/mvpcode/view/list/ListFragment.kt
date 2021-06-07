@@ -1,4 +1,4 @@
-package com.wencong.mvpcode
+package com.wencong.mvpcode.view.list
 
 import android.os.Bundle
 import android.util.Log
@@ -6,17 +6,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.wencong.mvpcode.R
 import com.wencong.mvpcode.adapter.DataAdapter
 import com.wencong.mvpcode.adapter.ListData
+import com.wencong.mvpcode.base.BaseFragment
 import com.wencong.mvpcode.databinding.FragmentListBinding
+import com.wencong.mvpcode.util.RequestData
 
 
-class ListFragment : Fragment() {
-    private val viewModel = MainListViewModel()
+class ListFragment : BaseFragment<ListPresenter>(),ListContract.IListView {
     private lateinit var dataBinding: FragmentListBinding
+    private var resultData:ResultData = ResultData()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,25 +34,25 @@ class ListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         init()
-        viewModel.loadData()
     }
 
     private fun init() {
-        dataBinding.model = viewModel
         dataBinding.rvMainList.layoutManager = LinearLayoutManager(context)
         val dataAdapter = DataAdapter()
         dataBinding.rvMainList.adapter = dataAdapter
 
+//        resultData.data = RequestData().loadMainData(0).toMutableList()
+        mPresenter?.loadData(0)
+
         dataBinding.srlMainList.setOnRefreshListener {
-            viewModel.loadData()
+            mPresenter?.loadData(0)
             dataBinding.srlMainList.isRefreshing = false
-            dataBinding.invalidateAll()
         }
 
         dataAdapter.loadMoreModule.isAutoLoadMore = false
         dataAdapter.loadMoreModule.enableLoadMoreEndClick = true
         dataAdapter.loadMoreModule.setOnLoadMoreListener {
-            viewModel.loadData(true)
+            mPresenter?.loadData(dataAdapter.itemCount - 1)
             dataAdapter.loadMoreModule.loadMoreComplete()
             dataBinding.invalidateAll()
         }
@@ -64,8 +66,25 @@ class ListFragment : Fragment() {
                 bundle.putString("content", item.content)
                 NavHostFragment
                     .findNavController(this@ListFragment)
-                    .navigate(R.id.action_listFragment_to_detailFragment,bundle)
+                    .navigate(R.id.action_listFragment_to_detailFragment, bundle)
             }
         }
+    }
+
+    override fun initPresenter(): ListPresenter {
+        return ListPresenter(this)
+    }
+
+    override fun loadDataSuccess(currentIndex:Int,data: ResultData) {
+        if (currentIndex == 0){
+            resultData = data
+        } else {
+            data.data?.let {
+                resultData.data?.addAll(it)
+            }
+        }
+        if (dataBinding.data == null)
+            dataBinding.data = resultData
+        dataBinding.invalidateAll()
     }
 }

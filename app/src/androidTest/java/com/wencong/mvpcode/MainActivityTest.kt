@@ -22,6 +22,7 @@ import androidx.test.filters.LargeTest
 import androidx.test.rule.ActivityTestRule
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.wencong.mvpcode.adapter.DataAdapter
+import com.wencong.mvpcode.view.list.ListFragment
 import org.hamcrest.CoreMatchers.*
 import org.hamcrest.Description
 import org.hamcrest.Matcher
