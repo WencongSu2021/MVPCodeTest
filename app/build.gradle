@@ -79,6 +79,9 @@ dependencies {
     androidTestImplementation "androidx.test.espresso:espresso-idling-resource:$espresso_version"
     // Navigation test
     androidTestImplementation "androidx.navigation:navigation-testing:$navgation_version"
+    debugImplementation "androidx.fragment:fragment-testing:$fragment_version"
+    testImplementation "org.mockito:mockito-core:$mock_version"
+    androidTestImplementation "org.mockito:mockito-android:$mock_version"
 }
 
 shot {

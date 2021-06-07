@@ -4,8 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.addCallback
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.NavHostFragment
 import com.wencong.mvpcode.databinding.FragmentDetailsBinding
 
 class DetailsFragment : Fragment() {
@@ -27,6 +29,9 @@ class DetailsFragment : Fragment() {
         arguments?.run {
             dataBinding.title = getString("title")
             dataBinding.content = getString("content")
+        }
+        dataBinding.ivBack.setOnClickListener {
+
         }
     }
 }
