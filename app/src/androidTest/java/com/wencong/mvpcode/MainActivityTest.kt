@@ -33,9 +33,10 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 @LargeTest
-class MainActivityTest :SnapshotTest{
+class MainActivityTest : SnapshotTest {
 
-    @Rule @JvmField
+    @Rule
+    @JvmField
     var mActivityTestRule = ActivityTestRule(MainActivity::class.java)
 
     @get:Rule
@@ -73,6 +74,9 @@ class MainActivityTest :SnapshotTest{
                     hasDescendant(withText("Click to load more")), click()
                 )
             ).check(matches(withAdaptedData(equalTo("data14"))))
+        getCurrentActivity()?.let {
+            compareScreenshot(it)
+        }
     }
 
     @Test
@@ -87,16 +91,38 @@ class MainActivityTest :SnapshotTest{
                     hasDescendant(withText("Click to load more")), click()
                 )
             ).check(matches(withAdaptedData(equalTo("data25"))))
+        getCurrentActivity()?.let {
+            compareScreenshot(it)
+        }
     }
 
     @Test
     fun scrollTest() {
         onView(withId(R.id.rvMainList))
             .perform(
+                RecyclerViewActions.actionOnItem<BaseViewHolder>(
+                    hasDescendant(withText("Click to load more")), click()
+                )
+            ).perform(
+                RecyclerViewActions.actionOnItem<BaseViewHolder>(
+                    hasDescendant(withText("Click to load more")), click()
+                )
+            ).perform(
+                RecyclerViewActions.actionOnItem<BaseViewHolder>(
+                    hasDescendant(withText("Click to load more")), click()
+                )
+            ).perform(
+                RecyclerViewActions.actionOnItem<BaseViewHolder>(
+                    hasDescendant(withText("Click to load more")), click()
+                )
+            ).perform(
                 scrollTo<BaseViewHolder>(
-                    hasDescendant(withText("data9"))
+                    hasDescendant(withText("data30"))
                 )
             )
+        getCurrentActivity()?.let {
+            compareScreenshot(it)
+        }
     }
 
     @Test
