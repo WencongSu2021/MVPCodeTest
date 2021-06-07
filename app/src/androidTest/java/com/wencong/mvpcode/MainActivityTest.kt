@@ -5,36 +5,28 @@ package com.wencong.mvpcode
 
 import android.view.View
 import androidx.fragment.app.testing.launchFragmentInContainer
-import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.testing.TestNavHostController
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.core.app.ApplicationProvider
-import androidx.test.espresso.Espresso
-import androidx.test.espresso.Espresso.*
-import androidx.test.espresso.accessibility.AccessibilityChecks
+import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.contrib.RecyclerViewActions.scrollTo
-import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import androidx.test.rule.ActivityTestRule
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.wencong.mvpcode.adapter.DataAdapter
-import org.hamcrest.CoreMatchers
 import org.hamcrest.CoreMatchers.*
 import org.hamcrest.Description
 import org.hamcrest.Matcher
 import org.hamcrest.TypeSafeMatcher
-import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.Mockito.mock
-import org.mockito.Mockito.verify
 
 @RunWith(AndroidJUnit4::class)
 @LargeTest
@@ -130,7 +122,7 @@ class MainActivityTest {
             )
         ).perform(click())
         assertThat(navController.currentDestination!!.id, equalTo(R.id.detailFragment))
-        pressBackUnconditionally()
+//        pressBack()
 //        assertThat(navController.currentDestination!!.id, equalTo(R.id.listFragment))
     }
 }
