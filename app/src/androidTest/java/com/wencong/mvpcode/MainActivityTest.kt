@@ -3,6 +3,7 @@
 package com.wencong.mvpcode
 
 
+import android.app.Activity
 import android.view.View
 import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.navigation.Navigation
@@ -15,6 +16,7 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.contrib.RecyclerViewActions.scrollTo
 import androidx.test.espresso.matcher.ViewMatchers.*
+import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import androidx.test.rule.ActivityTestRule
@@ -28,12 +30,16 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
+
 @RunWith(AndroidJUnit4::class)
 @LargeTest
-class MainActivityTest {
+class MainActivityTest :SnapshotTest{
 
     @Rule @JvmField
     var mActivityTestRule = ActivityTestRule(MainActivity::class.java)
+
+    @get:Rule
+    var activityRule = ActivityScenarioRule(MainActivity::class.java)
 
     @Test
     fun testViewExist() {
@@ -101,17 +107,33 @@ class MainActivityTest {
                 hasSibling(withText("This is simulated data 1, which is displayed and used on the interface"))
             )
         ).perform(click())
-//        onView(withId(R.id.tvDetailTitle)).check(matches(isDisplayed()))
+        onView(withId(R.id.tvDetailTitle)).check(matches(isDisplayed()))
+        onView(withId(R.id.tvDetailTitle)).perform(click())
 
+        getCurrentActivity()?.let {
+            compareScreenshot(it)
+        }
+    }
+
+    @Throws(Throwable::class)
+    fun getCurrentActivity(): Activity? {
+        var activity: Activity? = null
+        activityRule.scenario.onActivity {
+            activity = it
+        }
+        return activity
     }
 
     @Test
     fun testEventFragment() {
         val navController = TestNavHostController(
-            ApplicationProvider.getApplicationContext())
+            ApplicationProvider.getApplicationContext()
+        )
         val titleScenario = launchFragmentInContainer<ListFragment>()
 
+//        var activity: FragmentActivity? = null
         titleScenario.onFragment { fragment ->
+//            activity = fragment.activity
             navController.setGraph(R.navigation.nav_graph)
             Navigation.setViewNavController(fragment.requireView(), navController)
         }

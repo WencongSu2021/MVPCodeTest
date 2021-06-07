@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -31,7 +32,10 @@ class DetailsFragment : Fragment() {
             dataBinding.content = getString("content")
         }
         dataBinding.ivBack.setOnClickListener {
-
+            activity?.onBackPressed()
+        }
+        dataBinding.tvDetailTitle.setOnClickListener {
+            Toast.makeText(it.context,dataBinding.title,Toast.LENGTH_SHORT).show()
         }
     }
 }
